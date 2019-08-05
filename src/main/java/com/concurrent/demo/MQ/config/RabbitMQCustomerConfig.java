@@ -1,7 +1,5 @@
 package com.concurrent.demo.MQ.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -10,14 +8,8 @@ import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 @Configuration
 public class RabbitMQCustomerConfig {
-
-    static Lock lock = new ReentrantLock();
-    private static final Logger logger = LoggerFactory.getLogger(RabbitMQCustomerConfig.class);
 
     @Bean(name="listenerTest")
     public RabbitListenerContainerFactory<SimpleMessageListenerContainer> listenerTest(ConnectionFactory connectionFactory){
