@@ -33,8 +33,9 @@ public class InterFaceTest {
                 return 1;
             }
         });
+        Arrays.asList(execute).stream().forEach((item) -> System.out.println(item));
         //阻塞
-        CompletableFuture.anyOf(execute).join();
+        CompletableFuture.allOf(execute).join();
         //ms.sendRabbitmq(RabbitMqEnum.QueueEnum.TESTQUEUE.getCode(),"yy！！！", RabbitMqEnum.Exchange.CONTRACT_DIRECT.getCode());
         return "成功！";
     }
