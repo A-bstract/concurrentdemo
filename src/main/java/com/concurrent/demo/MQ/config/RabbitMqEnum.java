@@ -11,7 +11,8 @@ public class RabbitMqEnum {
     public enum Exchange {
         CONTRACT_FANOUT("CONTRACT_FANOUT", "消息分发"),
         CONTRACT_TOPIC("CONTRACT_TOPIC", "消息订阅"),
-        CONTRACT_DIRECT("CONTRACT_DIRECT", "点对点");
+        CONTRACT_DIRECT("CONTRACT_DIRECT", "点对点"),
+        CONTRACT_HEADERS("CONTRACT_HEADERS", "头交换机");
 
         private String code;
         private String name;
@@ -38,7 +39,8 @@ public class RabbitMqEnum {
     public enum QueueName {
         TESTQUEUE("TESTQUEUE", "测试队列"),
         TOPICTEST1("TOPICTEST1", "topic测试队列"),
-        TOPICTEST2("TOPICTEST2", "topic测试队列");
+        TOPICTEST2("TOPICTEST2", "topic测试队列"),
+        TOPICTEST3("TOPICTEST3", "topic测试队列3");
 
         private String code;
         private String name;

@@ -2,6 +2,9 @@ package com.concurrent.demo.MQ;
 
 import com.concurrent.demo.MQ.config.RabbitMqEnum;
 import com.concurrent.demo.MQ.product.MessageSender;
+import com.concurrent.demo.comment.concurrentUtil.IConcurrent;
+import com.concurrent.demo.comment.concurrentUtil.IRunnable;
+import com.concurrent.demo.comment.concurrentUtil.ThreadPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,24 +24,17 @@ public class InterFaceTest {
 
     @RequestMapping("/mq/test")
     public String test(){
-
-        Integer threadNum = 10;
-        ExecutorService executorService = Executors.newFixedThreadPool(threadNum);
-        List<String> listIteration = Arrays.asList("1","1","1","1","1","1","1","1","1","1");
-
-        Stream<CompletableFuture<Integer>> rStream = listIteration.stream().map((s) -> {
-            return CompletableFuture.supplyAsync(() -> {
-                return excute();
-            },executorService);
+        IConcurrent concurrent = new ThreadPool();
+        CompletableFuture[] exeResult = concurrent.execute(new IRunnable() {
+            @Override
+            public Integer doRunnable() {
+                ms.sendRabbitmq(RabbitMqEnum.QueueEnum.TESTQUEUE.getCode(), "yy！！！", RabbitMqEnum.Exchange.CONTRACT_DIRECT.getCode());
+                return 1;
+            }
         });
-        CompletableFuture[] futures = rStream.toArray(CompletableFuture[]::new);
         //阻塞
-        //CompletableFuture.anyOf(futures).join();
+        //exeResult.anyOf(futures).join();
         //ms.sendRabbitmq(RabbitMqEnum.QueueEnum.TESTQUEUE.getCode(),"yy！！！", RabbitMqEnum.Exchange.CONTRACT_DIRECT.getCode());
         return "成功！";
-    }
-
-    private int excute(){
-        return ms.sendRabbitmq(RabbitMqEnum.QueueEnum.TESTQUEUE.getCode(),"yy！！！", RabbitMqEnum.Exchange.CONTRACT_DIRECT.getCode());
     }
 }
