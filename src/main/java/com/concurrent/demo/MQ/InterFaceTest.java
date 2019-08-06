@@ -34,7 +34,7 @@ public class InterFaceTest {
         CompletableFuture[] futures = rStream.toArray(CompletableFuture[]::new);
         //阻塞
         //CompletableFuture.anyOf(futures).join();
-        ms.sendRabbitmq(RabbitMqEnum.QueueEnum.TESTQUEUE.getCode(),"yy！！！", RabbitMqEnum.Exchange.CONTRACT_DIRECT.getCode());
+        //ms.sendRabbitmq(RabbitMqEnum.QueueEnum.TESTQUEUE.getCode(),"yy！！！", RabbitMqEnum.Exchange.CONTRACT_DIRECT.getCode());
         return "成功！";
     }
 
