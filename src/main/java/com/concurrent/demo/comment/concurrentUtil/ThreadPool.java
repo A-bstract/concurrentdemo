@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 public class ThreadPool implements IConcurrent{
 
     @Override
-    public <T> T execute(IRunnable<T> runnable) {
+    public <T> CompletableFuture<T>[] execute(IRunnable<T> runnable) {
         Integer threadNum = 10;
         ExecutorService executorService = Executors.newFixedThreadPool(threadNum);
         List<String> listIteration = Arrays.asList("1","1","1","1","1","1","1","1","1","1");
@@ -22,6 +22,6 @@ public class ThreadPool implements IConcurrent{
             },executorService);
         });
         CompletableFuture[] futures = rStream.toArray(CompletableFuture[]::new);
-        return (T)futures;
+        return (CompletableFuture<T>[]) futures;
     }
 }

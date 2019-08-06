@@ -25,16 +25,16 @@ public class InterFaceTest {
     @RequestMapping("/mq/test")
     public String test(){
         IConcurrent concurrent = new ThreadPool();
-        CompletableFuture[] exeResult = concurrent.execute(new IRunnable<CompletableFuture[]>() {
+        CompletableFuture<Integer>[] execute = concurrent.execute(new IRunnable<Integer>() {
             @Override
-            public CompletableFuture[] doRunnable() {
+            public Integer doRunnable() {
                 //Thread.sleep();
                 ms.sendRabbitmq(RabbitMqEnum.QueueEnum.TESTQUEUE.getCode(), "yy！！！", RabbitMqEnum.Exchange.CONTRACT_DIRECT.getCode());
-                return null;
+                return 1;
             }
         });
         //阻塞
-        //exeResult.anyOf(futures).join();
+        CompletableFuture.anyOf(execute).join();
         //ms.sendRabbitmq(RabbitMqEnum.QueueEnum.TESTQUEUE.getCode(),"yy！！！", RabbitMqEnum.Exchange.CONTRACT_DIRECT.getCode());
         return "成功！";
     }
