@@ -35,13 +35,12 @@ public class ConsumerTest {
     @RabbitHandler // 此注解加上之后可以接受对象型消息
     public void onOrderMessage(Message message, @Headers Map<String, Object> headers,
                                Channel channel) throws IOException {
-        logger.info("消息体：" + message);
 
         //模仿处理请求
         lock.lock();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -49,6 +48,7 @@ public class ConsumerTest {
         Long deliveryTag = (Long) headers.get(AmqpHeaders.DELIVERY_TAG);
         // ACK
         channel.basicAck(deliveryTag, false);
+        logger.info("消费消息体：" + message);
 
         lock.unlock();
     }
