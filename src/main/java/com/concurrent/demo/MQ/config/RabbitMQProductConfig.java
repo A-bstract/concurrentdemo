@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 public class RabbitMQProductConfig {
     private static final Logger logger = LoggerFactory.getLogger(RabbitMQProductConfig.class);
@@ -109,6 +112,14 @@ public class RabbitMQProductConfig {
         return queue;
     }
 
+    @Bean
+    Queue queueHeaderTest(RabbitAdmin rabbitAdmin){
+        Queue queue = new Queue(RabbitMqEnum.QueueName.HEADERTEST1.getCode());
+        rabbitAdmin.declareQueue(queue);
+        logger.info("话题测试队列3实例化完成");
+        return queue;
+    }
+
 
     /*在此处完成队列和交换机绑定*/
     @Bean
@@ -134,6 +145,17 @@ public class RabbitMQProductConfig {
         Binding binding = BindingBuilder.bind(queueTopicTest2).to(exchange).with(RabbitMqEnum.QueueEnum.TESTTOPICQUEUE2.getCode());
         rabbitAdmin.declareBinding(binding);
         logger.info("测试队列与话题交换机2绑定完成");
+        return binding;
+    }
+
+    //header
+    @Bean
+    Binding bindingQueueTest(@Qualifier("queueHeaderTest")Queue queueHeaderTest, @Qualifier("contractHeadersExchange")HeadersExchange exchange, RabbitAdmin rabbitAdmin){
+        Map<String,Object> map = new HashMap<>();
+        map.put("queueName",queueHeaderTest.getName());
+        Binding binding = BindingBuilder.bind(queueHeaderTest).to(exchange).whereAll(map).match();
+        rabbitAdmin.declareBinding(binding);
+        logger.info("测试队列与直连型交换机绑定完成");
         return binding;
     }
 }
