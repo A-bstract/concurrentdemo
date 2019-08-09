@@ -149,7 +149,7 @@ public class RabbitMQProductConfig {
     }
 
     //header
-    @Bean
+    /*@Bean
     Binding bindingQueueTest(@Qualifier("queueHeaderTest")Queue queueHeaderTest, @Qualifier("contractHeadersExchange")HeadersExchange exchange, RabbitAdmin rabbitAdmin){
         Map<String,Object> map = new HashMap<>();
         map.put("queueName",queueHeaderTest.getName());
@@ -157,5 +157,5 @@ public class RabbitMQProductConfig {
         rabbitAdmin.declareBinding(binding);
         logger.info("测试队列与直连型交换机绑定完成");
         return binding;
-    }
+    }*/
 }
