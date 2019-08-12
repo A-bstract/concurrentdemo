@@ -17,6 +17,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<jedis.version>2.9.0</jedis.version>
+		<mq-version>2.0.0.RELEASE</mq-version>
 	</properties>
 
 	<dependencies>
@@ -58,6 +59,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+
+		<!-- 便利电MQ封装 -->
+		<dependency>
+			<groupId>com.bld365</groupId>
+			<artifactId>mq-core</artifactId>
+			<version>${mq-version}</version>
 		</dependency>
 
 	</dependencies>
