@@ -2,6 +2,7 @@ package com.concurrent.demo.T1.interrupt;
 
 /**
  * 线程中断测试 - 常规
+ * 线程中断异常会自动将中断标识执为false因为线程为了处理异常已经重新处于就绪状态
  */
 public class ThreadIterruptTest {
 
@@ -15,8 +16,8 @@ public class ThreadIterruptTest {
         }
         t1.interrupt();
     }
-
     public static class MRunnable implements Runnable{
+
         @Override
         public void run() {
             System.out.println("子线程启动！");
