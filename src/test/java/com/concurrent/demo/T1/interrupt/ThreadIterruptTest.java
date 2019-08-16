@@ -3,7 +3,7 @@ package com.concurrent.demo.T1.interrupt;
 /**
  * 线程中断测试 - 常规
  * 线程中断异常会自动将中断标识执为false因为线程为了处理异常已经重新处于就绪状态
- * interrupt标识位更像是一个逻辑flag 但是功能比普通flag多 1、它与线程中断检查性异常相呼应 2、可以处理阻塞
+ * interrupt标识位是Thread类里的一个属性 ，逻辑flag 但是功能比普通flag多 1、它与线程中断检查性异常相呼应 2、可以处理阻塞 3、他可以判断线程是否中断（系统原因）
  */
 public class ThreadIterruptTest {
 
