@@ -13,7 +13,7 @@ public class ClassReflex {
         classInfo.setClassNo("02");
         classInfo.setStudentNum("30");
         TestClass.ClassInfo.TeacherInfo teacherInfo = new TestClass.ClassInfo.TeacherInfo();
-        teacherInfo.settAge("40");
+        //teacherInfo.settAge("40");
         teacherInfo.settName("你爹");
         classInfo.setTeacherInfo(teacherInfo);
         testClass.setClassInfo(classInfo);
@@ -22,6 +22,7 @@ public class ClassReflex {
         Map<String, Object> map = getMap(testClass);
         System.out.println(map);
         JSONObject wrap = (JSONObject)JSONObject.wrap(map);
+        System.out.println(wrap.toString());
     }
 
     public static Map<String,Object> getMap(Object obj) throws Exception{
@@ -34,7 +35,13 @@ public class ClassReflex {
         Map<String,Object> resMap = new HashMap<>();
         for (Field field : fields){
             field.setAccessible(true);
-            Class<?> fieldClass = field.get(obj).getClass();
+            Object innerClass = field.get(obj);
+            Class<?> fieldClass = null;
+            if(innerClass == null){
+                resMap.put(field.getName(),null);
+                continue;
+            }
+            fieldClass = innerClass.getClass();
             String className = fieldClass.getName();
             if(className.indexOf("$") > 0){
                 Object innerObject = field.get(obj);
@@ -45,6 +52,4 @@ public class ClassReflex {
         }
         return resMap;
     }
-
-
 }
